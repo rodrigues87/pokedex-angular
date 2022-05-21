@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PokemonService} from "./services/PokemonService";
+import {PokemonModel} from "./Pokemon.model";
 
 @Component({
   selector: 'app-pokemon',
@@ -10,9 +11,12 @@ export class PokemonComponent implements OnInit {
 
   constructor(private pokemonService: PokemonService) { }
 
+  pokemon = new PokemonModel();
+
   ngOnInit(): void {
     this.pokemonService.findPokemonByIdOrName(1).subscribe( res =>{
-      console.log(res)
+      this.pokemon =res;
+      console.log(this.pokemon)
     })
   }
 
