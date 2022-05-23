@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'pokedex-angular';
+
+  irParaPokemonAnterior() {
+    console.log("foi para o anterior")
+  }
+
+  irParaPokemonPosterior() {
+    console.log("foi para o posterior")
+
+  }
 }
