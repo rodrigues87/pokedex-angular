@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, QueryList, ViewChildren} from '@angular/core';
+import {PokemonComponent} from "./pokemon/pokemon.component";
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,16 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'pokedex-angular';
 
+  @ViewChildren(PokemonComponent) pokemonComponents: QueryList<PokemonComponent>
+
   irParaPokemonAnterior() {
-    console.log("foi para o anterior")
+    this.pokemonComponents.forEach(c => c.irParaPokemonAnterior());
+
   }
 
   irParaPokemonPosterior() {
-    console.log("foi para o posterior")
+    this.pokemonComponents.forEach(c => c.irParaPokemonPosterior());
+
 
   }
 }

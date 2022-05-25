@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PokemonService} from "./services/PokemonService";
 import {PokemonModel} from "./Pokemon.model";
+import {AppComponent} from "../app.component";
+
+
 
 @Component({
   selector: 'app-pokemon',
@@ -9,18 +12,17 @@ import {PokemonModel} from "./Pokemon.model";
 })
 export class PokemonComponent implements OnInit {
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private pokemonService: PokemonService,
+              private appComponent :AppComponent) { }
   baseUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/";
 
   pokemon = new PokemonModel();
 
-  ngOnInit(): void {
-    this.pokemonService.findPokemonByIdOrName(1).subscribe( res =>{
-      this.pokemon =res;
-      this.prepararUrl();
+  idPokemon: number = 1;
+  idUltimoPokemon: number = 898;
 
-      console.log(this.pokemon)
-    })
+  ngOnInit(): void {
+    this.findPokemon();
   }
 
   private prepararUrl() {
@@ -33,5 +35,32 @@ export class PokemonComponent implements OnInit {
     }else {
       this.pokemon.urlImage = this.baseUrl + idPokemon + ".png";
     }
+  }
+
+  irParaPokemonAnterior() {
+    this.idPokemon = this.idPokemon -1;
+    if (this.idPokemon === 0){
+      this.idPokemon = this.idUltimoPokemon;
+    }
+    this.findPokemon();
+
+  }
+
+  irParaPokemonPosterior() {
+    this.idPokemon = this.idPokemon +1;
+    if(this.idPokemon >= this.idUltimoPokemon){
+      this.idPokemon = 1;
+    }
+    this.findPokemon();
+
+  }
+
+  private findPokemon() {
+    this.pokemonService.findPokemonByIdOrName(this.idPokemon).subscribe( res =>{
+      this.pokemon =res;
+      this.prepararUrl();
+
+      console.log(this.pokemon)
+    })
   }
 }
